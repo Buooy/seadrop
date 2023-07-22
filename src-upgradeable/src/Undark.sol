@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 
-import {
-    ERC721SeaDropUpgradeable
-} from "./ERC721SeaDropUpgradeable.sol";
+import { ERC721SeaDropUpgradeable } from "./ERC721SeaDropUpgradeable.sol";
 
 //  ============================================================================
 //
@@ -40,13 +38,11 @@ contract Undark is ERC721SeaDropUpgradeable {
     function initialize(
         string memory name,
         string memory symbol,
-        address administrator,
         address[] memory allowedSeaDrop
     ) external initializer initializerERC721A {
-        ERC721PartnerSeaDropUpgradeable.__ERC721PartnerSeaDrop_init(
+        ERC721SeaDropUpgradeable.__ERC721SeaDrop_init(
             name,
             symbol,
-            administrator,
             allowedSeaDrop
         );
     }
@@ -59,9 +55,7 @@ contract Undark is ERC721SeaDropUpgradeable {
     function updateStaking(
         uint256[] calldata _tokenIds,
         uint256[] calldata _stakedAt
-    ) external {
-        _onlyOwnerOrAdministratorOrSelf();
-
+    ) external onlyOwner {
         for (uint256 i; i < _tokenIds.length; i++) {
             if (_stakedAt[i] > 0) {
                 tokenStakeStatus[_tokenIds[i]] = _stakedAt[i];
@@ -107,9 +101,7 @@ contract Undark is ERC721SeaDropUpgradeable {
     }
 
     /// @dev get total stake count
-    function getTotalStaked() external view returns (uint256 _total) {
-        _onlyOwnerOrAdministratorOrSelf();
-
+    function getTotalStaked() external view onlyOwner returns (uint256 _total) {
         uint256 total;
         for (uint256 i; i < totalSupply(); ) {
             if (tokenStakeStatus[i] > 0) {
@@ -131,7 +123,7 @@ contract Undark is ERC721SeaDropUpgradeable {
         for (uint256 i; i < _tokens.length; ) {
             address tokenOwner = ownerOf(_tokens[i]);
             require(
-                tokenOwner == msg.sender || hasRole(DEV_ROLE, msg.sender),
+                tokenOwner == msg.sender || owner() == msg.sender,
                 "Not Token Owner"
             );
             stakedStatuses[i] = tokenStakeStatus[_tokens[i]];
