@@ -1,25 +1,24 @@
 import fs from "fs";
 import { ethers, upgrades } from "hardhat";
 
+const tokenName = "Undark";
+const tokenSymbol = "UNDK";
+const allowedSeaDrop = ["0x00005EA00Ac477B1030CE78506496e8C2dE24bf5"];
+
 async function mainDeploy() {
-  const ExampleToken = await ethers.getContractFactory("ExampleToken");
+  const Undark = await ethers.getContractFactory("Undark");
   console.log("Deploying...");
-  const exampleToken = await upgrades.deployProxy(
-    ExampleToken,
-    [
-      "ExampleToken",
-      "ExTkn",
-      "0x4468A5B725E2C63056131121cD33b66848E1dd87",
-      ["0x00005EA00Ac477B1030CE78506496e8C2dE24bf5"],
-    ],
+  const undark = await upgrades.deployProxy(
+    Undark,
+    [tokenName, tokenSymbol, allowedSeaDrop],
     { initializer: "initialize" }
   );
-  await exampleToken.deployed();
+  await undark.deployed();
   const addresses = {
-    proxy: exampleToken.address,
-    admin: await upgrades.erc1967.getAdminAddress(exampleToken.address),
+    proxy: undark.address,
+    admin: await upgrades.erc1967.getAdminAddress(undark.address),
     implementation: await upgrades.erc1967.getImplementationAddress(
-      exampleToken.address
+      undark.address
     ),
   };
   console.log("Addresses: ", addresses);
@@ -31,4 +30,6 @@ async function mainDeploy() {
   fs.writeFileSync("deployment-addresses.json", JSON.stringify(addresses));
 }
 
-mainDeploy();
+mainDeploy().catch((error) => {
+  console.error(error);
+});

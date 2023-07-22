@@ -2,12 +2,12 @@ import fs from "fs";
 import { ethers, upgrades } from "hardhat";
 
 async function main() {
-  const ExampleToken = await ethers.getContractFactory("ExampleToken");
+  const Undark = await ethers.getContractFactory("Undark");
   console.log("Upgrading...");
   let addresses = JSON.parse(
     fs.readFileSync("deployment-addresses.json").toString()
   );
-  const result = await upgrades.upgradeProxy(addresses.proxy, ExampleToken);
+  const result = await upgrades.upgradeProxy(addresses.proxy, Undark);
   await result.deployTransaction.wait();
   console.log("Upgraded");
 
