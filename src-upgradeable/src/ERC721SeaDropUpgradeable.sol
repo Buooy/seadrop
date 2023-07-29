@@ -7,14 +7,6 @@ import {
 } from "./ERC721ContractMetadataUpgradeable.sol";
 
 import {
-    IERC721AUpgradeable
-} from "../lib/ERC721A-Upgradeable/contracts/interfaces/IERC721AUpgradeable.sol";
-
-import {
-    ERC721AUpgradeable
-} from "../lib/ERC721A-Upgradeable/contracts/ERC721AUpgradeable.sol";
-
-import {
     INonFungibleSeaDropTokenUpgradeable
 } from "./interfaces/INonFungibleSeaDropTokenUpgradeable.sol";
 
@@ -132,9 +124,12 @@ contract ERC721SeaDropUpgradeable is
      *
      * @param allowedSeaDrop The allowed SeaDrop addresses.
      */
-    function updateAllowedSeaDrop(
-        address[] calldata allowedSeaDrop
-    ) external virtual override onlyOwner {
+    function updateAllowedSeaDrop(address[] calldata allowedSeaDrop)
+        external
+        virtual
+        override
+        onlyOwner
+    {
         _updateAllowedSeaDrop(allowedSeaDrop);
     }
 
@@ -201,13 +196,11 @@ contract ERC721SeaDropUpgradeable is
      *      This is to help with ERC721 contracts in which the same token URI
      *      is desired for each token, such as when the tokenURI is 'unrevealed'.
      */
-    function tokenURI(
-        uint256 tokenId
-    )
+    function tokenURI(uint256 tokenId)
         public
         view
         virtual
-        override(IERC721AUpgradeable, ERC721AUpgradeable)
+        override
         returns (string memory)
     {
         if (!_exists(tokenId)) revert URIQueryForNonexistentToken();
@@ -249,10 +242,12 @@ contract ERC721SeaDropUpgradeable is
      * @param minter   The address to mint to.
      * @param quantity The number of tokens to mint.
      */
-    function mintSeaDrop(
-        address minter,
-        uint256 quantity
-    ) external virtual override nonReentrant {
+    function mintSeaDrop(address minter, uint256 quantity)
+        external
+        virtual
+        override
+        nonReentrant
+    {
         // Ensure the SeaDrop is allowed.
         _onlyAllowedSeaDrop(msg.sender);
 
@@ -351,10 +346,11 @@ contract ERC721SeaDropUpgradeable is
      * @param seaDropImpl The allowed SeaDrop contract.
      * @param dropURI     The new drop URI.
      */
-    function updateDropURI(
-        address seaDropImpl,
-        string calldata dropURI
-    ) external virtual override {
+    function updateDropURI(address seaDropImpl, string calldata dropURI)
+        external
+        virtual
+        override
+    {
         // Ensure the sender is only the owner or contract itself.
         _onlyOwnerOrSelf();
 
@@ -477,9 +473,7 @@ contract ERC721SeaDropUpgradeable is
      *
      * @param minter The minter address.
      */
-    function getMintStats(
-        address minter
-    )
+    function getMintStats(address minter)
         external
         view
         override
@@ -499,9 +493,7 @@ contract ERC721SeaDropUpgradeable is
      *
      * @param interfaceId The interface id to check against.
      */
-    function supportsInterface(
-        bytes4 interfaceId
-    )
+    function supportsInterface(bytes4 interfaceId)
         public
         view
         virtual
@@ -532,12 +524,9 @@ contract ERC721SeaDropUpgradeable is
      *
      * Emits an {ApprovalForAll} event.
      */
-    function setApprovalForAll(
-        address operator,
-        bool approved
-    )
+    function setApprovalForAll(address operator, bool approved)
         public
-        override(IERC721AUpgradeable, ERC721AUpgradeable)
+        override
         onlyAllowedOperatorApproval(operator)
     {
         super.setApprovalForAll(operator, approved);
@@ -558,12 +547,9 @@ contract ERC721SeaDropUpgradeable is
      *
      * Emits an {Approval} event.
      */
-    function approve(
-        address operator,
-        uint256 tokenId
-    )
+    function approve(address operator, uint256 tokenId)
         public
-        override(IERC721AUpgradeable, ERC721AUpgradeable)
+        override
         onlyAllowedOperatorApproval(operator)
     {
         super.approve(operator, tokenId);
@@ -587,11 +573,7 @@ contract ERC721SeaDropUpgradeable is
         address from,
         address to,
         uint256 tokenId
-    )
-        public
-        override(IERC721AUpgradeable, ERC721AUpgradeable)
-        onlyAllowedOperator(from)
-    {
+    ) public override onlyAllowedOperator(from) {
         super.transferFrom(from, to, tokenId);
     }
 
@@ -602,11 +584,7 @@ contract ERC721SeaDropUpgradeable is
         address from,
         address to,
         uint256 tokenId
-    )
-        public
-        override(IERC721AUpgradeable, ERC721AUpgradeable)
-        onlyAllowedOperator(from)
-    {
+    ) public override onlyAllowedOperator(from) {
         super.safeTransferFrom(from, to, tokenId);
     }
 
@@ -631,11 +609,7 @@ contract ERC721SeaDropUpgradeable is
         address to,
         uint256 tokenId,
         bytes memory data
-    )
-        public
-        override(IERC721AUpgradeable, ERC721AUpgradeable)
-        onlyAllowedOperator(from)
-    {
+    ) public override onlyAllowedOperator(from) {
         super.safeTransferFrom(from, to, tokenId, data);
     }
 
@@ -648,9 +622,10 @@ contract ERC721SeaDropUpgradeable is
      *
      * @param config The configuration struct.
      */
-    function multiConfigure(
-        MultiConfigureStruct calldata config
-    ) external onlyOwner {
+    function multiConfigure(MultiConfigureStruct calldata config)
+        external
+        onlyOwner
+    {
         if (config.maxSupply > 0) {
             this.setMaxSupply(config.maxSupply);
         }

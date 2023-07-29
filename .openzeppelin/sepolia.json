@@ -1,0 +1,68 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0xbB70E2EEDE0A10339A4b8134E14E49cEAE22daC0",
+    "txHash": "0xb53a4e73805909ba04d1213fc19588ac610db0dd80fda5c879e8f99481a98d24"
+  },
+  "proxies": [
+    {
+      "address": "0xBBE41077276c9bf95320506ab54aa3299F7D684b",
+      "txHash": "0xb1149e8560dbd9b58f7d19aa470f00049cb04a545a2e50b17733fea02ab20d37",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "c7ede583c2a438722fe8fd19db9b13eaa75cf3cb4707e1cba698475ce04e97b5": {
+      "address": "0xcC9EdfdbF0d896fbf7D05FD9AB729F489eFddc9a",
+      "txHash": "0x451c64f7e0a2dced12056e5eb44ec5fe015831dc5601121d2c11e183f1a6f25d",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "tokenStakeStatus",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Undark",
+            "src": "src/Undark.sol:44"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}

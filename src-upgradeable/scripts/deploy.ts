@@ -3,22 +3,25 @@ import { ethers, upgrades } from "hardhat";
 
 const tokenName = "Undark";
 const tokenSymbol = "UNDK";
-const allowedSeaDrop = ["0x00005EA00Ac477B1030CE78506496e8C2dE24bf5"];
+const seadropAddress = process.env.SEADROP_ADDRESS;
+const allowedSeaDrop = [seadropAddress];
 
 async function mainDeploy() {
+  const { provider } = ethers;
+  const admin = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
   const Undark = await ethers.getContractFactory("Undark");
   console.log("Deploying...");
-  const undark = await upgrades.deployProxy(
+  const token = await upgrades.deployProxy(
     Undark,
     [tokenName, tokenSymbol, allowedSeaDrop],
     { initializer: "initialize" }
   );
-  await undark.deployed();
+  await token.deployed();
   const addresses = {
-    proxy: undark.address,
-    admin: await upgrades.erc1967.getAdminAddress(undark.address),
+    proxy: token.address,
+    admin: await upgrades.erc1967.getAdminAddress(token.address),
     implementation: await upgrades.erc1967.getImplementationAddress(
-      undark.address
+      token.address
     ),
   };
   console.log("Addresses: ", addresses);

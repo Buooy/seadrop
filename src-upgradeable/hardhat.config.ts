@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 import "@nomiclabs/hardhat-waffle";
 import "@openzeppelin/hardhat-upgrades";
 import "@nomiclabs/hardhat-etherscan";
@@ -20,8 +19,8 @@ module.exports = {
     ],
   },
   networks: {
-    mumbai: {
-      url: process.env.RPC_URL_MUMBAI,
+    sepolia: {
+      url: process.env.RPC_URL_SEPOLIA,
       accounts: [process.env.PRIVATE_KEY],
     },
   },

@@ -6,16 +6,8 @@ import {
 } from "./interfaces/ISeaDropTokenContractMetadataUpgradeable.sol";
 
 import {
-    IERC721AUpgradeable
-} from "../lib/ERC721A-Upgradeable/contracts/interfaces/IERC721AUpgradeable.sol";
-
-import {
     ERC721AUpgradeable
 } from "../lib/ERC721A-Upgradeable/contracts/ERC721AUpgradeable.sol";
-
-import {
-    ERC721AQueryableUpgradeable
-} from "../lib/ERC721A-Upgradeable/contracts/extensions/ERC721AQueryableUpgradeable.sol";
 
 import {
     TwoStepOwnableUpgradeable
@@ -42,7 +34,7 @@ import {
  *         with additional metadata and ownership capabilities.
  */
 contract ERC721ContractMetadataUpgradeable is
-    ERC721AQueryableUpgradeable,
+    ERC721AUpgradeable,
     TwoStepOwnableUpgradeable,
     ISeaDropTokenContractMetadataUpgradeable
 {
@@ -121,10 +113,9 @@ contract ERC721ContractMetadataUpgradeable is
      * @param fromTokenId The start token id.
      * @param toTokenId   The end token id.
      */
-    function emitBatchMetadataUpdate(
-        uint256 fromTokenId,
-        uint256 toTokenId
-    ) external {
+    function emitBatchMetadataUpdate(uint256 fromTokenId, uint256 toTokenId)
+        external
+    {
         // Ensure the sender is only the owner or contract itself.
         _onlyOwnerOrSelf();
 
@@ -142,7 +133,7 @@ contract ERC721ContractMetadataUpgradeable is
         _onlyOwnerOrSelf();
 
         // Ensure the max supply does not exceed the maximum value of uint64.
-        if (newMaxSupply > 2 ** 64 - 1) {
+        if (newMaxSupply > 2**64 - 1) {
             revert CannotExceedMaxSupplyOfUint64(newMaxSupply);
         }
 
@@ -279,7 +270,7 @@ contract ERC721ContractMetadataUpgradeable is
      * @return royaltyAmount The royalty payment amount for _salePrice.
      */
     function royaltyInfo(
-        uint256 /* _tokenId */,
+        uint256, /* _tokenId */
         uint256 _salePrice
     ) external view returns (address receiver, uint256 royaltyAmount) {
         // Put the royalty info on the stack for more efficient access.
@@ -300,13 +291,11 @@ contract ERC721ContractMetadataUpgradeable is
      *
      * @param interfaceId The interface id to check against.
      */
-    function supportsInterface(
-        bytes4 interfaceId
-    )
+    function supportsInterface(bytes4 interfaceId)
         public
         view
         virtual
-        override(IERC165Upgradeable, IERC721AUpgradeable, ERC721AUpgradeable)
+        override(IERC165Upgradeable, ERC721AUpgradeable)
         returns (bool)
     {
         return

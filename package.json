@@ -7,12 +7,14 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "hardhat compile --config ./hardhat.config.ts",
-    "clean": "hardhat clean; hardhat clean --config ./hardhat-coverage.config.ts; forge clean; rm -rf coverage coverage.json hh-cache hh-cache-coverage",
+    "build": "hardhat compile --config ./src-upgradeable/hardhat.config.ts",
+    "build:non-upgradeable": "hardhat compile --config ./hardhat.config.ts",
+    "clean": "hardhat clean; hardhat clean --config ./src-upgradeable/hardhat.config.ts; forge clean; rm -rf coverage coverage.json hh-cache hh-cache-coverage",
+    "deploy": "npx hardhat run --config ./src-upgradeable/hardhat.config.ts --network sepolia src-upgradeable/scripts/deploy.ts",
     "test": "hardhat test --config ./src-upgradeable/hardhat.config.ts",
-    "test:undark": "hardhat test ./src-upgradeable/tests --config ./src-upgradeable/hardhat.config.ts",
     "test:non-upgradeable": "hardhat test --config ./hardhat.config.ts",
     "test:forge": "forge test -vvv",
+    "typechain": "typechain --target=./src-upgradeable/artifacts",
     "profile": "REPORT_GAS=true hardhat test --config ./hardhat.config.ts",
     "coverage": "rm -rf temp-src-coverage; hardhat preprocess --dest temp-src-coverage; yarn coverage:hardhat:fix-lib-link; hardhat coverage --config ./hardhat-coverage.config.ts --solcoverjs ./config/.solcover.js; yarn lcov-convert-relative-paths-to-absolute",
     "coverage:forge": "forge coverage --report summary --report lcov; yarn lcov-filter-ignored-files",
@@ -26,6 +28,7 @@
     "lint:fix": "yarn lint:fix:format && yarn lint:fix:eslint",
     "lint:fix:format": "prettier --write **.{sol,js,ts}",
     "lint:fix:eslint": "eslint --fix . --ext js,ts",
+    "node": "npx hardhat node",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -38,6 +41,7 @@
     "hardhat": "^2.17.0"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@nomiclabs/hardhat-waffle": "^2.0.6",
