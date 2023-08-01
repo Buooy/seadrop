@@ -16,6 +16,8 @@ contract TestHelper is Test, SeaDropErrorsAndEvents {
     ERC721PartnerSeaDrop token;
 
     address creator = makeAddr("creator");
+    address financeWallet = makeAddr("financeWallet");
+    address minter = makeAddr("minter");
 
     /// @notice Internal constants for EIP-712: Typed structured
     ///         data hashing and signing
@@ -97,14 +99,7 @@ contract TestHelper is Test, SeaDropErrorsAndEvents {
         address feeRecipient,
         MintParams memory mintParams,
         uint256 salt
-    )
-        internal
-        returns (
-            bytes32 r,
-            bytes32 s,
-            uint8 v
-        )
-    {
+    ) internal returns (bytes32 r, bytes32 s, uint8 v) {
         bytes32 digest = _getDigest(
             nftContract,
             minter,
