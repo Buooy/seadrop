@@ -77,6 +77,20 @@ contract Undark is ERC721SeaDropUpgradeable {
     }
 
     //  ============================================================
+    //  Burn
+    //  ============================================================
+    /// @dev burns a set of tokens
+    /// @param _tokenIds array of token ids to burn
+    function batchBurn(uint256[] calldata _tokenIds) external {
+        for (uint256 i; i < _tokenIds.length; ) {
+            _burn(_tokenIds[i], true);
+            unchecked {
+                i++;
+            }
+        }
+    }
+
+    //  ============================================================
     //  Staking / Vesting
     //  ============================================================
     /// @param _tokenIds array of token ids to stake
