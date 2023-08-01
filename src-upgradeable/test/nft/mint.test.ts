@@ -8,6 +8,7 @@ describe("Token (Mint)", function () {
   let ownerAddress;
   let externalAccount;
   let externalAccountAddress;
+  const mintPrice = ethers.utils.parseEther("0.01");
 
   before(async () => {
     const {
@@ -49,19 +50,42 @@ describe("Token (Mint)", function () {
     expect(await nft.maxSupply()).to.equal(10);
   });
 
+  it("set mint price by owner only", async () => {
+    await expect(
+      nft.connect(externalAccount).setMintPrice(mintPrice)
+    ).to.be.revertedWith("OnlyOwner()");
+
+    await nft.connect(owner).setMintPrice(mintPrice);
+    expect(await nft.mintPrice()).to.equal(mintPrice);
+  });
+
   it("mints one token", async () => {
-    await nft.connect(externalAccount).mint(1, externalAccountAddress);
+    await expect(
+      nft
+        .connect(externalAccount)
+        .mint(1, externalAccountAddress, { value: mintPrice.div(2).toString() })
+    ).to.be.revertedWith("Invalid ETH Amount");
+
+    await nft
+      .connect(externalAccount)
+      .mint(1, externalAccountAddress, { value: mintPrice.toString() });
     expect(await nft.balanceOf(externalAccountAddress)).to.equal(1);
   });
 
   it("mint to delegate address", async () => {
-    await nft.connect(externalAccount).mint(4, ownerAddress);
+    await nft
+      .connect(externalAccount)
+      .mint(4, ownerAddress, { value: mintPrice.mul(4).toString() });
     expect(await nft.balanceOf(ownerAddress)).to.equal(4);
   });
 
   it("fails if exceed max supply", async () => {
     await expect(
-      nft.connect(externalAccount).mint(20, externalAccountAddress)
+      nft
+        .connect(externalAccount)
+        .mint(20, externalAccountAddress, {
+          value: mintPrice.mul(20).toString(),
+        })
     ).to.be.revertedWith("Exceed Total Supply");
   });
 });

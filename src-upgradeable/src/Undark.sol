@@ -32,6 +32,7 @@ import { ERC721SeaDropUpgradeable } from "./ERC721SeaDropUpgradeable.sol";
 contract Undark is ERC721SeaDropUpgradeable {
     address public financeWallet;
     uint256 public maxMintQuantity;
+    uint256 public mintPrice;
     bool public directMintEnabled;
     mapping(uint256 => uint256) public tokenStakeStatus; // token id => timestamp
 
@@ -71,6 +72,7 @@ contract Undark is ERC721SeaDropUpgradeable {
             symbol,
             allowedSeaDrop
         );
+        _setMintPrice(0.1 ether);
         _setMaxMintQuantity(10);
         _setDirectMint(false);
         _setFinanceWallet(financeWalletAddress);
@@ -212,6 +214,18 @@ contract Undark is ERC721SeaDropUpgradeable {
         directMintEnabled = _enabled;
     }
 
+    /// @dev set mint price
+    /// @param _mintPrice new mint price
+    function setMintPrice(uint256 _mintPrice) external onlyOwner {
+        _setMintPrice(_mintPrice);
+    }
+
+    /// @dev internal function to set mint price
+    /// @param _mintPrice new mint price
+    function _setMintPrice(uint256 _mintPrice) internal {
+        mintPrice = _mintPrice;
+    }
+
     /// @dev update max mint quantity
     /// @param newMaxMintQuantity new max mint quantity
     function setMaxMintQuantity(uint256 newMaxMintQuantity) external onlyOwner {
@@ -231,6 +245,7 @@ contract Undark is ERC721SeaDropUpgradeable {
         uint256 quantity,
         address delegateAddress
     ) external payable isDirectMintEnabled {
+        require(msg.value == quantity * mintPrice, "Invalid ETH Amount");
         require(
             _totalMinted() + quantity <= maxSupply(),
             "Exceed Total Supply"
