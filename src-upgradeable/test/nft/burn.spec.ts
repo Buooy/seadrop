@@ -8,6 +8,7 @@ describe("Token (Burning)", function () {
   let ownerAddress;
   let externalAccount;
   let externalAccountAddress;
+  const mintPrice = ethers.utils.parseEther("0.1");
 
   before(async () => {
     const {
@@ -27,7 +28,9 @@ describe("Token (Burning)", function () {
     //  Mint tokens
     await nft.connect(owner).setDirectMint(true);
     await nft.connect(owner).setMaxSupply(100);
-    await nft.connect(externalAccount).mint(5, externalAccountAddress);
+    await nft
+      .connect(externalAccount)
+      .mint(5, externalAccountAddress, { value: mintPrice.mul(5).toString() });
   });
 
   it("prevents burning tokens not owned", async () => {

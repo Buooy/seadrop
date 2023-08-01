@@ -6,7 +6,7 @@ export const tokenSymbol = "UNDK";
 export const seadropAddress = process.env.SEADROP_ADDRESS;
 
 export const baseContract = async () => {
-  const [owner, financeWallet, externalAccount]: Signer[] =
+  const [owner, financeWallet, externalAccount, nonHolder]: Signer[] =
     await ethers.getSigners();
   const NFTFactory = await ethers.getContractFactory("Undark");
   const nft = await upgrades.deployProxy(
@@ -40,6 +40,8 @@ export const baseContract = async () => {
     financeWalletAddress: await financeWallet.getAddress(),
     externalAccount,
     externalAccountAddress: await externalAccount.getAddress(),
+    nonHolder,
+    nonHolderAddress: await nonHolder.getAddress(),
     addresses,
   };
 };
