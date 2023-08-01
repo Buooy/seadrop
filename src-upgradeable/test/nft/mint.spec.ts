@@ -81,11 +81,9 @@ describe("Token (Mint)", function () {
 
   it("fails if exceed max supply", async () => {
     await expect(
-      nft
-        .connect(externalAccount)
-        .mint(20, externalAccountAddress, {
-          value: mintPrice.mul(20).toString(),
-        })
+      nft.connect(externalAccount).mint(20, externalAccountAddress, {
+        value: mintPrice.mul(20).toString(),
+      })
     ).to.be.revertedWith("Exceed Total Supply");
   });
 });
