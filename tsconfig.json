@@ -8,6 +8,14 @@
     "declaration": true,
     "resolveJsonModule": true
   },
-  "include": ["./scripts", "./test", "./typechain-types", "./eip-712-types", "./*.config.ts"],
-  "files": ["./hardhat.config.ts"]
+  "include": [
+    "./scripts",
+    "src-upgradeable copy/test",
+    "./test",
+    "./typechain-types",
+    "./eip-712-types",
+    "./*.config.ts",
+    "src-upgradeable copy/src/test-save/Undark.spec.ts"
+  ],
+  "files": ["src-upgradeable copy/hardhat.config.ts"]
 }
