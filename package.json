@@ -11,6 +11,7 @@
     "build:non-upgradeable": "hardhat compile --config ./hardhat.config.ts",
     "clean": "hardhat clean; hardhat clean --config ./src-upgradeable/hardhat.config.ts; forge clean; rm -rf coverage coverage.json hh-cache hh-cache-coverage",
     "deploy": "npx hardhat run --config ./src-upgradeable/hardhat.config.ts --network sepolia src-upgradeable/scripts/deploy.ts",
+    "sepolia:verify": "npx hardhat verify --config ./src-upgradeable/hardhat.config.ts --network sepolia",
     "test": "hardhat test --config ./src-upgradeable/hardhat.config.ts",
     "test:non-upgradeable": "hardhat test --config ./hardhat.config.ts",
     "test:forge": "forge test -vvv",
@@ -37,11 +38,13 @@
     "*.ts": "prettier --write"
   },
   "dependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "ethers": "^5.7.2",
     "hardhat": "^2.17.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
+    "@nomicfoundation/hardhat-verify": "^1.1.1",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@nomiclabs/hardhat-waffle": "^2.0.6",

@@ -2,6 +2,7 @@ require("dotenv").config();
 import "@nomiclabs/hardhat-waffle";
 import "@openzeppelin/hardhat-upgrades";
 import "@nomiclabs/hardhat-etherscan";
+// import "@nomicfoundation/hardhat-verify";
 
 module.exports = {
   solidity: {
@@ -27,7 +28,10 @@ module.exports = {
   etherscan: {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
-    apiKey: process.env.ETHERSCAN_KEY,
+    apiKey: {
+      mainnet: process.env.ETHERSCAN_KEY,
+      sepolia: process.env.ETHERSCAN_KEY,
+    },
   },
   paths: { sources: "./src" },
 };
