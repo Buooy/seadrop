@@ -13,6 +13,12 @@ This contract is an ERC721A v4 contract compatible with OpenSea's SeaDrop. The f
 1. This repository utilises Git Submodules for dependency management. It is the opinion of this developer (Buooy) that it is a poor choice by OpenSea. However, in the absence of a viable package manager and poor support via NPM, we will stick with it
 2. We use `NPM` instead of `yarn` for practical reasons that most developers will have `NPM` installed. You may feel free to use `yarn` or `pnpm`. Note that only `package-lock.json` is provided
 
+## Project Structure and Organisation
+
+- Note that this section is still WIP
+
+1. Main ERC721A Contract: src-upgradeable/src/Undark.sol
+
 ## Installation
 
 1. Set up the ENV file
