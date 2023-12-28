@@ -39,6 +39,19 @@ contract Undark is ERC721SeaDropUpgradeable {
     //  ============================================================
     //  Modifiers
     //  ============================================================
+    modifier areAllNotStaked(uint256[] calldata _tokenIds) {
+        for (uint256 i; i < _tokenIds.length; ) {
+            require(
+                tokenStakeStatus[_tokenIds[i]] == 0,
+                "All tokens must be unstaked"
+            );
+            unchecked {
+                i++;
+            }
+        }
+        _;
+    }
+
     modifier isNotStaked(uint256 _tokenId) {
         require(tokenStakeStatus[_tokenId] == 0, "Token is Staked");
         _;
@@ -83,7 +96,9 @@ contract Undark is ERC721SeaDropUpgradeable {
     //  ============================================================
     /// @dev burns a set of tokens
     /// @param _tokenIds array of token ids to burn
-    function batchBurn(uint256[] calldata _tokenIds) external {
+    function batchBurn(
+        uint256[] calldata _tokenIds
+    ) external areAllNotStaked(_tokenIds) {
         for (uint256 i; i < _tokenIds.length; ) {
             _burn(_tokenIds[i], true);
             unchecked {
