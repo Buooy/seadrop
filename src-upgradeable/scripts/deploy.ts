@@ -8,16 +8,18 @@ const allowedSeaDrop = [seadropAddress];
 
 async function mainDeploy() {
   const { provider } = ethers;
-  const admin = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+  const owner = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+  const ownerAddress = await owner.getAddress();
   const Undark = await ethers.getContractFactory("Undark");
   console.log("Deploying...");
   const token = await upgrades.deployProxy(
     Undark,
-    [tokenName, tokenSymbol, allowedSeaDrop],
+    [tokenName, tokenSymbol, ownerAddress, allowedSeaDrop],
     { initializer: "initialize" }
   );
   await token.deployed();
   const addresses = {
+    owner: ownerAddress,
     proxy: token.address,
     admin: await upgrades.erc1967.getAdminAddress(token.address),
     implementation: await upgrades.erc1967.getImplementationAddress(
