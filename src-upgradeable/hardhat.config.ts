@@ -20,6 +20,10 @@ module.exports = {
     ],
   },
   networks: {
+    mainnet: {
+      url: process.env.RPC_URL_ETHEREUM,
+      accounts: [process.env.PRIVATE_KEY],
+    },
     sepolia: {
       url: process.env.RPC_URL_SEPOLIA,
       accounts: [process.env.PRIVATE_KEY],
