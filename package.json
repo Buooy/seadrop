@@ -11,6 +11,7 @@
     "build:non-upgradeable": "hardhat compile --config ./hardhat.config.ts",
     "clean": "hardhat clean; hardhat clean --config ./src-upgradeable/hardhat.config.ts; forge clean; rm -rf coverage coverage.json hh-cache hh-cache-coverage",
     "deploy": "npx hardhat run --config ./src-upgradeable/hardhat.config.ts --network sepolia src-upgradeable/scripts/deploy.ts",
+    "deploy:mainnet": "npx hardhat run --config ./src-upgradeable/hardhat.config.ts --network mainnet src-upgradeable/scripts/deploy.ts",
     "sepolia:verify": "npx hardhat verify --config ./src-upgradeable/hardhat.config.ts --network sepolia",
     "test": "hardhat test --config ./src-upgradeable/hardhat.config.ts",
     "test:non-upgradeable": "hardhat test --config ./hardhat.config.ts",

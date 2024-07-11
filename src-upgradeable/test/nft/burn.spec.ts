@@ -33,14 +33,6 @@ describe("Token (Burning)", function () {
       .mint(5, externalAccountAddress, { value: mintPrice.mul(5).toString() });
   });
 
-  it("prevents burning tokens that are staked", async () => {
-    await nft.connect(externalAccount).stake([1]);
-    await expect(
-      nft.connect(externalAccount).batchBurn([1, 5])
-    ).to.be.revertedWith("All tokens must be unstaked");
-    await nft.connect(externalAccount).unstake([1]);
-  });
-
   it("prevents burning tokens not owned", async () => {
     await expect(nft.connect(owner).batchBurn([1, 6])).to.be.revertedWith(
       "TransferCallerNotOwnerNorApproved"

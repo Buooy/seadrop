@@ -1,0 +1,104 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x563f03Dabf21Dfa715aD6b0968847188625E0132",
+    "txHash": "0x775fb7cdaf64e7959f22ac229de3556ef6bc4e4192995f80818cd4e7164ee283"
+  },
+  "proxies": [
+    {
+      "address": "0xD21adD2D4F233547A7020ac9Db0Ae9f223E65B69",
+      "txHash": "0x857d8a087bfef3346377955cea21b823e8ee1b9c1484343c815c0e661e949ad5",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "c8a7d8f64f5f1e98c59a28dd4f6bed4805528c101552f18d213208e850840ed5": {
+      "address": "0x53c98953b08F44033dF061f5C3618807707aC89C",
+      "txHash": "0xcc5ae877ad48e6fa472dd25fdbd2317013dda07ebc7bc0d936c5628707d11f81",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol:68"
+          },
+          {
+            "label": "financeWallet",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_address",
+            "contract": "Undark",
+            "src": "src/Undark.sol:44"
+          },
+          {
+            "label": "maxMintQuantity",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "Undark",
+            "src": "src/Undark.sol:45"
+          },
+          {
+            "label": "mintPrice",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256",
+            "contract": "Undark",
+            "src": "src/Undark.sol:45"
+          },
+          {
+            "label": "directMintEnabled",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_bool",
+            "contract": "Undark",
+            "src": "src/Undark.sol:46"
+          },
+          {
+            "label": "tokenStakeStatus",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "Undark",
+            "src": "src/Undark.sol:48"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}
